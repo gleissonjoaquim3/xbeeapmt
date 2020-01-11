@@ -27,14 +27,21 @@ void loop()
   if (XBee.available())  //Verifica se tem outros xbee disponiveis
   { 
     char c = XBee.read(); // Faz a leitura enviada por outro xbee
-    if (c == 'H' && estadobot == LOW) //Caso receba a letra H e o botão não esteja pressuinado
+    if (c == 'H') //Caso receba a letra H e o botão não esteja pressuinado
     {
-      digitalWrite(LED, HIGH);
-      delay(50);
+    
+      while (estadobot == LOW) // Enquanto o botão não for pressionado
+      {
+      digitalWrite(LED, HIGH); // Acende o led
+      Serial.print("Berço 1"); // No Seria monitor printa a Identificação do berço 1 por exemplo
+      delay (4000); // Delay de 4s
+      }
+    
     }
     else
     {
       digitalWrite(LED, LOW);
+      
     }
   }
   else
