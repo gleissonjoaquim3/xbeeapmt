@@ -3,10 +3,14 @@
 #include <Arduino.h>
 // RX: Arduino pin 2, XBee pin DOUT.  TX:  Arduino pin 3, XBee pin DIN
 SoftwareSerial XBee(2, 3);
-const int LED = 9; //Declaração do led no pino 9
-const int bto = 8;
+const int LED1 = 9;  //Declaração do led1 no pino 9
+const int LED2 = 10; //Declaração do led2 no pino 10
+const int LED3 = 11; //Declaração do led3 no pino 11
+const int bto1 = 8;  //Declaração do bot1 no pino 8
+const int bto2 = 7;  //Declaração do bot2 no pino 7
+const int bto3 = 6;  //Declaração do bot3 no pino 6
 
-int estadobot = 0; //Variável que conterá os estados do botão (0 LOW, 1 HIGH).
+int estadobot1 , estadobot2 , estadobot3 = 0; //Variável que conterá os estados do botão (0 LOW, 1 HIGH).
 
 
 void setup()
@@ -14,25 +18,32 @@ void setup()
   // Baud rate MUST match XBee settings (as set in XCTU)
   XBee.begin(9600);
   Serial.begin(9600);
-  pinMode(LED, OUTPUT);
-  pinMode(bto,INPUT);
+  pinMode(LED1,OUTPUT); //Led 1 configurado como saída
+  pinMode(LED2,OUTPUT); //Led 2 configurado como saída
+  pinMode(LED3,OUTPUT); //Led 3 configurado como saída
+  pinMode(bto1,INPUT); //bto1 configurado como entrada
+  pinMode(bto2,INPUT); //bto2 configurado como entrada
+  pinMode(bto3,INPUT); //bto3 configurado como entrada
 }
 
 void loop()
 {
   //Faz a leitura do estado do pino 2, constante botao, e atribuindo 
   //o resultado a variável estadoBotao.
-  estadobot = digitalRead(bto);    
+  estadobot1 = digitalRead(bto1);
+  estadobot2 = digitalRead(bto2);
+  estadobot3 = digitalRead(bto3);    
 
   if (XBee.available())  //Verifica se tem outros xbee disponiveis
   { 
     char c = XBee.read(); // Faz a leitura enviada por outro xbee
+    
     if (c == 'H') //Caso receba a letra H e o botão não esteja pressuinado
     {
     
-      while (estadobot == LOW) // Enquanto o botão não for pressionado
+      while (estadobot1 == LOW) // Enquanto o botão não for pressionado
       {
-      digitalWrite(LED, HIGH); // Acende o led
+      digitalWrite(LED1, HIGH); // Acende o led
       Serial.print("Berço 1"); // No Seria monitor printa a Identificação do berço 1 por exemplo
       delay (4000); // Delay de 4s
       }
@@ -40,8 +51,7 @@ void loop()
     }
     else
     {
-      digitalWrite(LED, LOW);
-      
+      digitalWrite(LED1, LOW);
     }
   }
   else
