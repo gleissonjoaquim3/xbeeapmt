@@ -2,6 +2,10 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"name": "Lcd_teste",
+			"path": "/home/gleissonjjc/Documentos/vscode/arduino/xbeeapmt/Lcd_teste"
 		}
 	],
 	"settings": {}
