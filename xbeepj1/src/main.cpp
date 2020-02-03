@@ -15,6 +15,27 @@ boolean pisca = false; // Definido estado da variavel pisca tipo verdadeiro ou f
 unsigned long delay1 = 0; // Definido variavel delay1 com início em 0
 // tipo de declaração que pode armazenar maior quantidade de números  
 
+/***************************************************
+* Função que gera pulso (1º argum, variavel a ser pulsada, 2º 
+argum, tempo de duração do pulso em millisegundo)
+****************************************************/
+void pulso(int pino, unsigned int tempo)
+{
+  if ((millis() - delay1) >= tempo) //Função millis Retorna o número de milissegundos passados desde 
+    {                                  //que a placa Arduino começou a executar o programa atual.
+                                      // Se a diferença entre a condição for maior ou igual a x. Executa algo 
+      digitalWrite( pino, HIGH); // Acende o led vermelho
+    }
+    if ((millis() - delay1) < tempo) //Se a diferença entre a condição for menor a x. Executa algo 
+    {
+      digitalWrite( pino, LOW); // Apaga o led vermelho.
+    }
+    if ((millis() - delay1) >= (tempo*2))
+    {
+      delay1 = millis(); // Faz com que a função millis retorne ao valor 0
+    }
+}
+
 void setup()
 { // Código que será carregado ao ligar o arduino
   pinMode(pinbotao, INPUT); // Variavel pinbotao definida como entrada(INPUT)
@@ -49,34 +70,16 @@ void loop()
     digitalWrite(ledvd,HIGH);
     delay(40000);
     digitalWrite(ledvd,LOW); // Acende o led verde por x segundos e apaga o led vermelho
-
   }
-  
    // Aqui digo que caso o botao seja acionado entrará em modo de pisca
   if (pisca ) // se a variavel pisca for true
-  
   {      
-    if ((millis() - delay1) >= 700) //Função millis Retorna o número de milissegundos passados desde 
-    {                                  //que a placa Arduino começou a executar o programa atual.
-                                      // Se a diferença entre a condição for maior ou igual a x. Executa algo 
-      digitalWrite( ledvm, HIGH); // Acende o led vermelho
-    }
-
-    if ((millis() - delay1) < 700) //Se a diferença entre a condição for menor a x. Executa algo 
-    {
-      digitalWrite( ledvm, LOW); // Apaga o led vermelho.
-    }
-    
-    if ((millis() - delay1) >= 1400)
-    {
-      delay1 = millis(); // Faz com que a função millis retorne ao valor 0
-    }
-
+    pulso(ledvm,700);
   } 
   else 
   {
     digitalWrite( ledvm, LOW);
   }
-    
+
 delay(200);
 }
