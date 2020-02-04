@@ -5,9 +5,9 @@
 #include <Arduino.h> // Inclusão de biblioteca
 
 SoftwareSerial XBee(2, 3); // RX: Arduino pin 2, XBee pin DOUT.  TX:  Arduino pin 3, XBee pin DIN
-#define pinbotao 12 // Botão definido na entrada digital 12
-#define ledvm 7 // LED definido na saída digital 7
-#define ledvd 6 // LED definido na saída digital 6
+#define pinbotao 10 // Botão definido na entrada digital 12
+#define ledvm 9 // LED definido na saída digital 7
+#define ledvd 8 // LED definido na saída digital 6
 
 boolean estadobotao = false; // Definido estado da variavel estadodobotao tipo verdadeiro ou falsa
 boolean estantbotao = false; // Definido estado da variavel estantbotão na variavel tipo verdadeiro ou falsa
@@ -55,7 +55,8 @@ void loop()
   
   if (estadobotao == HIGH) // se o botão for pressionado
   {
-    XBee.write('K'); // Manda um caracter 'L' para outro disposisivo
+    XBee.write('K');
+    delay(500); // Manda um caracter 'L' para outro disposisivo
   } 
 
   if (estadobotao && !estantbotao ) // Condição que compara o estado atual com o estado anterior do botão
@@ -68,7 +69,7 @@ void loop()
     pisca = !pisca;
     digitalWrite(ledvm,LOW);
     digitalWrite(ledvd,HIGH);
-    delay(40000);
+    delay(120000);
     digitalWrite(ledvd,LOW); // Acende o led verde por x segundos e apaga o led vermelho
   }
    // Aqui digo que caso o botao seja acionado entrará em modo de pisca

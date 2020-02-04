@@ -6,6 +6,10 @@
 		{
 			"name": "Lcd_teste",
 			"path": "/home/gleissonjjc/Documentos/vscode/arduino/xbeeapmt/Lcd_teste"
+		},
+		{
+			"name": "teste",
+			"path": "/home/gleissonjjc/Documents/PlatformIO/Projects/teste"
 		}
 	],
 	"settings": {}
