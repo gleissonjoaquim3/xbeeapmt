@@ -13,20 +13,20 @@ boolean estadobotao = false; // Definido estado da variavel estadodobotao tipo v
 boolean estantbotao = false; // Definido estado da variavel estantbotão na variavel tipo verdadeiro ou falsa
 boolean pisca = false; // Definido estado da variavel pisca tipo verdadeiro ou falsa
 unsigned long delay1 = 0; // Definido variavel delay1 com início em 0
-// tipo de declaração que pode armazenar maior quantidade de números  
+// tipo de declaração que pode armazenar maior quantidade de números
 
-/***************************************************
-* Função que gera pulso (1º argum, variavel a ser pulsada, 2º 
-argum, tempo de duração do pulso em millisegundo)
-****************************************************/
+  /***************************************************
+  * Função que gera pulso (1º argum, variavel a ser pulsada, 2º
+  argum, tempo de duração do pulso em millisegundo)
+  ****************************************************/
 void pulso(int pino, unsigned int tempo)
 {
-  if ((millis() - delay1) >= tempo) //Função millis Retorna o número de milissegundos passados desde 
+  if ((millis() - delay1) >= tempo) //Função millis Retorna o número de milissegundos passados desde
     {                                  //que a placa Arduino começou a executar o programa atual.
-                                      // Se a diferença entre a condição for maior ou igual a x. Executa algo 
+                                      // Se a diferença entre a condição for maior ou igual a x. Executa algo
       digitalWrite( pino, HIGH); // Acende o led vermelho
     }
-    if ((millis() - delay1) < tempo) //Se a diferença entre a condição for menor a x. Executa algo 
+    if ((millis() - delay1) < tempo) //Se a diferença entre a condição for menor a x. Executa algo
     {
       digitalWrite( pino, LOW); // Apaga o led vermelho.
     }
@@ -39,7 +39,7 @@ void pulso(int pino, unsigned int tempo)
 void setup()
 { // Código que será carregado ao ligar o arduino
   pinMode(pinbotao, INPUT); // Variavel pinbotao definida como entrada(INPUT)
-  //pinMode(LED_BUILTIN,OUTPUT); 
+  //pinMode(LED_BUILTIN,OUTPUT);
   pinMode(ledvd,OUTPUT); // Variavel ledvd definida como entrada(OUTPUT)
   pinMode(ledvm,OUTPUT); // Variavel ledvd definida como entrada(OUTPUT)
   XBee.begin(9600); // Inicia o serial de leitura do xbee no BAUD RATE 9600
@@ -52,18 +52,18 @@ void loop()
   char c = XBee.read(); // Armazena na variavel c o sinal recebido
   //Serial.print(c);
   estadobotao = digitalRead(pinbotao); // estadobotao recebe o sinal do botão
-  
+
   if (estadobotao == HIGH) // se o botão for pressionado
   {
     XBee.write('K');
     delay(500); // Manda um caracter 'L' para outro disposisivo
-  } 
+  }
 
   if (estadobotao && !estantbotao ) // Condição que compara o estado atual com o estado anterior do botão
   {
     pisca = !pisca; // troca o estaco da variavel pisca para true
   }
-  
+
   if (c == 'k' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
   {
     pisca = !pisca;
@@ -74,10 +74,10 @@ void loop()
   }
    // Aqui digo que caso o botao seja acionado entrará em modo de pisca
   if (pisca ) // se a variavel pisca for true
-  {      
+  {
     pulso(ledvm,700);
-  } 
-  else 
+  }
+  else
   {
     digitalWrite( ledvm, LOW);
   }

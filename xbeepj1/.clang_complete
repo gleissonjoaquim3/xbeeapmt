@@ -1,0 +1,29 @@
+-I/home/gleissonjjc/Projects/xbeeapmt/xbeepj1/include
+-I/home/gleissonjjc/Projects/xbeeapmt/xbeepj1/src
+-I/home/gleissonjjc/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src
+-I/home/gleissonjjc/.platformio/packages/framework-arduino-avr/cores/arduino
+-I/home/gleissonjjc/.platformio/packages/framework-arduino-avr/variants/standard
+-I/home/gleissonjjc/.platformio/lib/Adafruit GFX Library_ID13
+-I/home/gleissonjjc/.platformio/lib/Adafruit-TFT-LCD_ID32
+-I/home/gleissonjjc/.platformio/lib/Blynk_ID415/src
+-I/home/gleissonjjc/.platformio/lib/DHT sensor library_ID19
+-I/home/gleissonjjc/.platformio/lib/ESP32 BLE Arduino_ID1841/src
+-I/home/gleissonjjc/.platformio/lib/LiquidCrystal_I2C_ID576
+-I/home/gleissonjjc/.platformio/lib/LiquidCrystal_ID136
+-I/home/gleissonjjc/.platformio/lib/RadioLib_ID5795/src
+-I/home/gleissonjjc/.platformio/lib/SD_ID161
+-I/home/gleissonjjc/.platformio/lib/XBee_ID6
+-I/home/gleissonjjc/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src
+-I/home/gleissonjjc/.platformio/packages/framework-arduino-avr/libraries/HID/src
+-I/home/gleissonjjc/.platformio/packages/framework-arduino-avr/libraries/SPI/src
+-I/home/gleissonjjc/.platformio/packages/framework-arduino-avr/libraries/Wire/src
+-I/home/gleissonjjc/.platformio/packages/toolchain-atmelavr/avr/include
+-I/home/gleissonjjc/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include-fixed
+-I/home/gleissonjjc/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include
+-I/home/gleissonjjc/.platformio/packages/tool-unity
+-DPLATFORMIO=40201
+-DARDUINO_AVR_UNO
+-DF_CPU=16000000L
+-DARDUINO_ARCH_AVR
+-DARDUINO=10808
+-D__AVR_ATmega328P__
