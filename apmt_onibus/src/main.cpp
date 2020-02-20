@@ -6,10 +6,10 @@ pelos postos remotos localizados ao longo do Terminal Portuário */
 
 SoftwareSerial XBee(2, 3); // Criação do objeto XBee
 
-#define pinbotao_1 5  //Definição do botão no pino 5
+int pinbotao_1  = 5;  //Definição do botão no pino 5
 //#define pinbotao_2 6
 //#define pinbotao_3 7
-#define ledvm1 8    //Definição do botão no pino 8
+int ledvm1 = 8;    //Definição do botão no pino 8
 //#define ledvm2 9
 //#define ldevm3 10
 
@@ -26,31 +26,6 @@ led = led para acionar na saída
 botao = botão que será acionado
 estadobotao = faz a leitura do estado do botão
 ****************************************************/
-void pega_caracter(const char letra_a_receber,
-    const char letra_a_enviar,
-    int led, int botao,
-    int estadobotao)
-{
-
-estadobotao = digitalRead(botao); // Recebe o sinal do botao
-
-if ( XBee.available() > 0) // Verifica a disponibilidade de outros dispositivos
-{
-  char c = XBee.read(); // Faz a leitura de sinal enviado
-//XBee.print(c); // Descomentar para ver pelo serial o sinal recebido
-if (c == letra_a_receber)
-{
-  digitalWrite(led, HIGH); // Aciona o led
-}
-if (c == letra_a_receber && estadobotao == HIGH)
-{
-  XBee.write(letra_a_enviar); // Escreve na saida xbee
-  digitalWrite(led, LOW); // Desliga o led
-}
-/*TODO Estudar uma forma de fazer um tipo de envio que possa "buscar"
-o outro dispositivo */
-}
-}
 
 void setup() // Código carregado apenas uma vez.
 {
@@ -65,8 +40,21 @@ void setup() // Código carregado apenas uma vez.
 
 void loop() // Código qe será executado sempre pelo arduino
 {
+  estadobotao_1 = digitalRead(pinbotao_1);
 
-pega_caracter('K', 'k', ledvm1, pinbotao_1, estadobotao_1);
-delay(60);
+  XBee.available();
+  char c = XBee.read();
+  //Serial.print(c);
 
-}
+  if (c == 'K')
+  {
+    digitalWrite(ledvm1, HIGH);
+  }
+
+  if (estadobotao_1 == HIGH)
+  {
+    XBee.write('k');
+    delay(500);
+    digitalWrite(ledvm1, LOW);
+  }
+  }
