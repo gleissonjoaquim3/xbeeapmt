@@ -55,7 +55,7 @@ void loop()
 
   if (estadobotao == HIGH) // se o botão for pressionado
   {
-    XBee.write('K');
+    XBee.write('L');
     delay(500); // Manda um caracter 'L' para outro disposisivo
   }
 
@@ -64,7 +64,7 @@ void loop()
     pisca = !pisca; // troca o estaco da variavel pisca para true
   }
 
-  if (c == 'k' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
+  if (c == 'l' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
   {
     pisca = !pisca;
     digitalWrite(ledvm,LOW);
