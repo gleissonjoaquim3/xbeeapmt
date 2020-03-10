@@ -1,6 +1,8 @@
 /* Código para que seja enviado um sinal via placa xbee para outro dispositivo xbee
 //que ao receber este sinal envia outro como resposta */
 
+/* Ponto 3 da Van*/
+
 #include <SoftwareSerial.h> // Inclusão de biblioteca
 #include <Arduino.h> // Inclusão de biblioteca
 
@@ -23,7 +25,7 @@ void pulso(int pino, unsigned int tempo)
 {
   if ((millis() - delay1) >= tempo) //Função millis Retorna o número de milissegundos passados desde
     {                                  //que a placa Arduino começou a executar o programa atual.
-                                      // Se a diferença entre a condição for maior ou igual a x. Executa algo
+                                    // Se a diferença entre a condição for maior ou igual a x. Executa algo
       digitalWrite( pino, HIGH); // Acende o led vermelho
     }
     if ((millis() - delay1) < tempo) //Se a diferença entre a condição for menor a x. Executa algo
@@ -43,7 +45,7 @@ void setup()
   pinMode(ledvd,OUTPUT); // Variavel ledvd definida como entrada(OUTPUT)
   pinMode(ledvm,OUTPUT); // Variavel ledvd definida como entrada(OUTPUT)
   XBee.begin(9600); // Inicia o serial de leitura do xbee no BAUD RATE 9600
-  //Serial.begin(9600); // Inicia o serial monitor no BAUD RATE 9600
+  Serial.begin(9600); // Inicia o serial monitor no BAUD RATE 9600
 }
 
 void loop()
@@ -52,10 +54,11 @@ void loop()
   char c = XBee.read(); // Armazena na variavel c o sinal recebido
   //Serial.print(c);
   estadobotao = digitalRead(pinbotao); // estadobotao recebe o sinal do botão
+  //Serial.print(estadobotao);
 
   if (estadobotao == HIGH) // se o botão for pressionado
   {
-    XBee.write('L');
+    XBee.write('M');
     delay(500); // Manda um caracter 'L' para outro disposisivo
   }
 
@@ -64,7 +67,7 @@ void loop()
     pisca = !pisca; // troca o estaco da variavel pisca para true
   }
 
-  if (c == 'l' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
+  if (c == 'm' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
   {
     pisca = !pisca;
     digitalWrite(ledvm,LOW);
