@@ -1,10 +1,14 @@
 /* Código para que seja enviado um sinal via placa xbee para outro dispositivo xbee
 //que ao receber este sinal envia outro como resposta */
 
-/* Ponto 3 da Van*/
+/* Ponto Abrigo da Van*/
 
 #include <SoftwareSerial.h> // Inclusão de biblioteca
 #include <Arduino.h> // Inclusão de biblioteca
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 4); // Setup do lcd
 
 SoftwareSerial XBee(2, 3); // RX: Arduino pin 2, XBee pin DOUT.  TX:  Arduino pin 3, XBee pin DIN
 #define pinbotao 10 // Botão definido na entrada digital 12
@@ -38,18 +42,64 @@ void pulso(int pino, unsigned int tempo)
     }
 }
 
+void movimento (){
+  for (int posicao = 0; posicao < 2; posicao++)
+  {
+    lcd.scrollDisplayLeft();
+    delay(300);
+  }
+   
+  //Rolagem para a direita
+  for (int posicao = 0; posicao < 4; posicao++)
+  {
+    lcd.scrollDisplayRight();
+    delay(300);
+  }
+  for (int posicao = 0; posicao < 2; posicao++)
+  {
+    lcd.scrollDisplayLeft();
+    delay(300);
+  }
+}
+
+void home(){
+  lcd.setCursor(2,0);
+  lcd.print("Pondo da Van");
+  lcd.setCursor(2,1);
+  lcd.print("Abrigo - 01");
+}
+
+
 void setup()
 { // Código que será carregado ao ligar o arduino
+  lcd.init();
+  lcd.backlight();
+  home();
   pinMode(pinbotao, INPUT); // Variavel pinbotao definida como entrada(INPUT)
   //pinMode(LED_BUILTIN,OUTPUT);
   pinMode(ledvd,OUTPUT); // Variavel ledvd definida como entrada(OUTPUT)
   pinMode(ledvm,OUTPUT); // Variavel ledvd definida como entrada(OUTPUT)
   XBee.begin(9600); // Inicia o serial de leitura do xbee no BAUD RATE 9600
   Serial.begin(9600); // Inicia o serial monitor no BAUD RATE 9600
+  lcd.clear();
+    lcd.setCursor(3,0);
+    lcd.print("Transporte");
+    lcd.setCursor(3,1);
+    lcd.print("a caminho ! "); // Escreve no lcd
+    movimento();
 }
 
 void loop()
 { // Será repetido infinitamente pelo arduino
+  //Rolagem para a esquerda
+  lcd.clear();
+    lcd.setCursor(3,0);
+    lcd.print("Transporte");
+    lcd.setCursor(3,1);
+    lcd.print("a caminho ! "); // Escreve no lcd
+    movimento();
+    delay(5000);
+    home();
   XBee.available();  // Verifica se há algum xbee disponivel
   char c = XBee.read(); // Armazena na variavel c o sinal recebido
   //Serial.print(c);
@@ -58,7 +108,7 @@ void loop()
 
   if (estadobotao == HIGH) // se o botão for pressionado
   {
-    XBee.write('M');
+    XBee.write('A');
     delay(500); // Manda um caracter 'L' para outro disposisivo
   }
 
@@ -67,13 +117,16 @@ void loop()
     pisca = !pisca; // troca o estaco da variavel pisca para true
   }
 
-  if (c == 'm' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
+  if (c == 'a') // Condição caso receba o caracter correto e o pisca for false
   {
-    pisca = !pisca;
-    digitalWrite(ledvm,LOW);
-    digitalWrite(ledvd,HIGH);
-    delay(120000);
-    digitalWrite(ledvd,LOW); // Acende o led verde por x segundos e apaga o led vermelho
+    lcd.clear();
+    lcd.setCursor(3,0);
+    lcd.print("Transporte");
+    lcd.setCursor(3,1);
+    lcd.print("a caminho ! "); // Escreve no lcd
+    delay(12000);
+    movimento();
+    home();
   }
    // Aqui digo que caso o botao seja acionado entrará em modo de pisca
   if (pisca ) // se a variavel pisca for true
@@ -82,7 +135,7 @@ void loop()
   }
   else
   {
-    digitalWrite( ledvm, LOW);
+    home();
   }
 
 delay(200);
