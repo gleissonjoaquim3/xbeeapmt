@@ -22,16 +22,16 @@ pelos postos remotos localizados ao longo do Terminal Portuário */
 
 SoftwareSerial XBee(2, 3); // Criação do objeto XBee
 
-int pinbotao_1  = 5;  //Definição do botão no pino 5
-//#define pinbotao_2 6
-//#define pinbotao_3 7
-int ledvm1 = 8;    //Definição do botão no pino 8
-//#define ledvm2 9
-//#define ldevm3 10
+//int pinbotao_1  = 5;  //Definição do botão no pino 5
+#define pinbotao_2 6
+#define pinbotao_3 7
+//int ledvm1 = 8;    //Definição do botão no pino 8
+#define ledvm2 9
+#define ledvm3 10
 
-int estadobotao_1 = 0;  //Estado atual do botão
-//int estadobotao_2 = 0;  //Estado atual do botão
-//int estadobotao_3 = 0;  //Estado atual do botão
+//int estadobotao_1 = 0;  //Estado atual do botão
+int estadobotao_2 = 0;  //Estado atual do botão
+int estadobotao_3 = 0;  //Estado atual do botão
 
 /***************************************************
 * Função que pega a letra recebida pelo xbee e manda o
@@ -48,15 +48,20 @@ void setup() // Código carregado apenas uma vez.
 
   Serial.begin(9600);
   XBee.begin(9600);
-  pinMode(pinbotao_1, INPUT);
-  pinMode(ledvm1, OUTPUT);
-  //pinMode(ledvm2, OUTPUT);
-  //pinMode(ledvm3, OUTPUT);
+  //pinMode(pinbotao_1, INPUT);
+  pinMode(pinbotao_2, INPUT);
+  pinMode(pinbotao_3, INPUT);
+  //pinMode(ledvm1, OUTPUT);
+  pinMode(ledvm2, OUTPUT);
+  pinMode(ledvm3, OUTPUT);
 }
 
 void loop() // Código qe será executado sempre pelo arduino
 {
-  estadobotao_1 = digitalRead(pinbotao_1);
+  //estadobotao_1 = digitalRead(pinbotao_1);
+  estadobotao_2 = digitalRead(pinbotao_2);
+  estadobotao_3 = digitalRead(pinbotao_3);
+
 
   XBee.available();
   char c = XBee.read();
@@ -64,13 +69,25 @@ void loop() // Código qe será executado sempre pelo arduino
 
   if (c == 'K')
   {
-    digitalWrite(ledvm1, HIGH);
+    digitalWrite(ledvm2, HIGH);
   }
 
-  if (estadobotao_1 == HIGH)
+  if (estadobotao_2 == HIGH)
   {
     XBee.write('k');
     delay(500);
-    digitalWrite(ledvm1, LOW);
+    digitalWrite(ledvm2, LOW);
+  }
+
+  if (c == 'L')
+  {
+    digitalWrite(ledvm3, HIGH);
+  }
+
+  if (estadobotao_3 == HIGH)
+  {
+    XBee.write('l');
+    delay(500);
+    digitalWrite(ledvm3, LOW);
   }
   }
