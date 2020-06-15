@@ -1,3 +1,19 @@
+/* Copyright (C) 2020  Gleisson J. J. Cardoso <gleissoncg2@gmail.com>
+ *               2020  Robson Cordeiro  <robson.cordeiro@apmt.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+
 /* Código para que seja enviado um sinal via placa xbee para outro dispositivo xbee
 //que ao receber este sinal envia outro como resposta */
 
@@ -55,7 +71,7 @@ void loop()
 
   if (estadobotao == HIGH) // se o botão for pressionado
   {
-    XBee.write('K');
+    XBee.write('L');
     delay(500); // Manda um caracter 'L' para outro disposisivo
   }
 
@@ -64,7 +80,7 @@ void loop()
     pisca = !pisca; // troca o estaco da variavel pisca para true
   }
 
-  if (c == 'k' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
+  if (c == 'l' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
   {
     pisca = !pisca;
     digitalWrite(ledvm,LOW);
