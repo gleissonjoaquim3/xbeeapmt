@@ -1,4 +1,5 @@
-/* Copyright (C) 2020  Gleisson J. J. Cardoso
+/* Copyright (C) 2020  Gleisson J. J. Cardoso <gleissoncg2@gmail.com>
+ *               2020  Robson Cordeiro  <robson.cordeiro@apmt.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
