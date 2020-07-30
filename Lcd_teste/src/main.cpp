@@ -128,14 +128,17 @@ void setup()
   pinMode(pinbotao, INPUT); // Variavel pinbotao definida como entrada(INPUT)
   XBee.begin(9600); // Inicia o serial de leitura do xbee no BAUD RATE 9600
   //Serial.begin(9600); // Inicia o serial monitor no BAUD RATE 9600
-  //mens_inicial();
+  mens_inicial();
 }
 
 void loop()
 { 
-  //mens_local();
+  mens_local();
+  delay(6000);
   //mens_chama_van();
+  //delay(6000);
   mens_a_caminho();
+  delay(6000);
   // Será repetido infinitamente pelo arduino
   XBee.available();  // Verifica se há algum xbee disponivel
   char c = XBee.read(); // Armazena na variavel c o sinal recebido
@@ -151,7 +154,6 @@ void loop()
   if (estadobotao && !estantbotao ) // Condição que compara o estado atual com o estado anterior do botão
   {
     pisca = !pisca; // troca o estaco da variavel pisca para true
-    mens_chama_van();
   }
 
   if (c == 'l' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
