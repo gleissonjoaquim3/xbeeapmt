@@ -23,45 +23,45 @@
 
 LiquidCrystal_I2C lcd(0x27,2,1,0,4,5,6,7,3, POSITIVE); //ENDEREÇO DO I2C E DEMAIS INFORMAÇÕES
 
-
 SoftwareSerial XBee(2, 3); // RX: Arduino pin 2, XBee pin DOUT.  TX:  Arduino pin 3, XBee pin DIN
 #define pinbotao 10 // Botão definido na entrada digital 12
 
 boolean estadobotao = false; // Definido estado da variavel estadodobotao tipo verdadeiro ou falsa
 boolean estantbotao = false; // Definido estado da variavel estantbotão na variavel tipo verdadeiro ou falsa
 boolean pisca = false; // Definido estado da variavel pisca tipo verdadeiro ou falsa
+int tela = 1; // Muda estado da tela
 
 void mens_inicial(){
   // Função que mostra mensagen ao ligar o arduino
-  lcd.setCursor(2,0);
+  lcd.setCursor(3,0);
   lcd.print("CHAMADA VAN");
   lcd.setCursor(4,1);
   lcd.print("Ver. 1.0");
-  delay(3000);
+  delay(2000);
   for (int posicao = 0; posicao < 5; posicao++)
   {
     lcd.scrollDisplayLeft(); // Rolagem para a esquerda
-    delay(200);
+    delay(150);
   }
   for (int posicao = 0; posicao < 10; posicao++)
   {
     lcd.scrollDisplayRight(); //Rolagem para a direita
-    delay(200);
+    delay(150);
   }
   for (int posicao = 0; posicao < 5; posicao++)
   {
     lcd.scrollDisplayLeft(); // Rolagem para a esquerda
-    delay(200);
+    delay(150);
   }
-delay(2000);
+delay(1000);
 lcd.clear();
 }
 
 void mens_local(){
-  lcd.setCursor(2,0);
+  lcd.setCursor(3,0);
   lcd.print("CHAMADA VAN");
-  lcd.setCursor(2,1);
-  lcd.print("LOCAL - AZB");
+  lcd.setCursor(1,1);
+  lcd.print("LOCAL - OFICINA");
   delay(300);
 }
 
@@ -128,14 +128,11 @@ void setup()
   pinMode(pinbotao, INPUT); // Variavel pinbotao definida como entrada(INPUT)
   XBee.begin(9600); // Inicia o serial de leitura do xbee no BAUD RATE 9600
   //Serial.begin(9600); // Inicia o serial monitor no BAUD RATE 9600
-  //mens_inicial();
+  mens_inicial();
 }
 
 void loop()
-{ 
-  //mens_local();
-  //mens_chama_van();
-  mens_a_caminho();
+{
   // Será repetido infinitamente pelo arduino
   XBee.available();  // Verifica se há algum xbee disponivel
   char c = XBee.read(); // Armazena na variavel c o sinal recebido
@@ -151,21 +148,30 @@ void loop()
   if (estadobotao && !estantbotao ) // Condição que compara o estado atual com o estado anterior do botão
   {
     pisca = !pisca; // troca o estaco da variavel pisca para true
-    mens_chama_van();
+    tela = 2; // Troca menu da tela
   }
-
   if (c == 'l' && (pisca)) // Condição caso receba o caracter correto e o pisca for false
   {
     pisca = !pisca;
-    delay(120000);
+    tela = 3; //Troca menu da tela
+    
   }
-   // Aqui digo que caso o botao seja acionado entrará em modo de pisca
-  if (pisca ) // se a variavel pisca for true
-  {
-  }
-  else
-  {
-  }
+  delay(200);
 
-delay(200);
+  switch (tela) // Alterna os casos dependendo do valor da variável tela
+  {
+  case 1:
+    mens_local();
+    break;
+  case 2:
+    mens_chama_van();
+    break;
+  case 3:
+  {
+    mens_a_caminho();
+    delay(120000);
+    tela = 1;
+    break;
+  }
+  } 
 }
