@@ -21,7 +21,7 @@
 #include <Arduino.h> // Inclusão de biblioteca
 #include <LiquidCrystal_I2C.h>
 
-LiquidCrystal_I2C lcd(0x27,2,1,0,4,5,6,7,3, POSITIVE); //ENDEREÇO DO I2C E DEMAIS INFORMAÇÕES
+LiquidCrystal_I2C lcd(0x27,16,2); //ENDEREÇO DO I2C E DEMAIS INFORMAÇÕES
 
 SoftwareSerial XBee(2, 3); // RX: Arduino pin 2, XBee pin DOUT.  TX:  Arduino pin 3, XBee pin DIN
 #define pinbotao 10 // Botão definido na entrada digital 12
@@ -123,8 +123,8 @@ void mens_a_caminho(){
 
 void setup()
 { // Código que será carregado ao ligar o arduino
-  lcd.begin(16,2);
-  lcd.setBacklight(HIGH);
+  lcd.init();
+  lcd.backlight();
   pinMode(pinbotao, INPUT); // Variavel pinbotao definida como entrada(INPUT)
   XBee.begin(9600); // Inicia o serial de leitura do xbee no BAUD RATE 9600
   //Serial.begin(9600); // Inicia o serial monitor no BAUD RATE 9600
